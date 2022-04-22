@@ -1,5 +1,4 @@
 var Service, Characteristic;
-var request = require('sync-request');
 var DigestFetch = require("digest-fetch");
 
 var url 
@@ -7,11 +6,11 @@ var url
 module.exports = function (homebridge) {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-axis-lock-switch", "SimpleHttpSwitch", SimpleHttpSwitch);
+    homebridge.registerAccessory("homebridge-axis-lock-switch", "AxisLockSwitch", AxisLockSwitch);
 }
 
 
-function SimpleHttpSwitch(log, config) {
+function AxisLockSwitch(log, config) {
     this.log = log;
 
     // url info
@@ -24,7 +23,7 @@ function SimpleHttpSwitch(log, config) {
     this.password = config["password"];
 }
 
-SimpleHttpSwitch.prototype = {
+AxisLockSwitch.prototype = {
 
 /*	
     httpRequest: function (url, body, method, username, password, sendimmediately, callback) {
