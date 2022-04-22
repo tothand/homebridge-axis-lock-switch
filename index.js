@@ -46,7 +46,7 @@ AxisLockSwitch.prototype = {
 
     setPowerState: function(powerOn, callback) {
 	setTimeout(() => {
-		        this.currentState=false;);
+		        this.currentState=false;
 		      }, 7000);
         var client = new DigestFetch(this.username, this.password);
 //	var url = 'http://192.168.1.68/axis-cgi/io/port.cgi?action=4:/7000%5C';
