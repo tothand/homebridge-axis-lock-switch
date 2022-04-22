@@ -18,6 +18,7 @@
     "url": "git://github.com/tothand/homebridge-axis-lock-switch.git"
   },
   "dependencies": {
-    "digest-fetch": "^1.2.1"
+    "digest-fetch": "^1.2.1",
+    "node-fetch": "^2.6.1"
   }
 }
