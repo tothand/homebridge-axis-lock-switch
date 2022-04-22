@@ -21,6 +21,7 @@ function AxisLockSwitch(log, config) {
     this.name = config["name"];
     this.username = config["username"];
     this.password = config["password"];
+    this.currentSatate = false;
 }
 
 AxisLockSwitch.prototype = {
@@ -40,15 +41,17 @@ AxisLockSwitch.prototype = {
     },
 */
     getPowerState: function (callback) {
-        callback(null, !this.default_state_off);
+        callback(null, this.currentState);
     },
 
     setPowerState: function(powerOn, callback) {
+	setTimeout(() => {
+		        this.currentState=false;);
+		      }, 7000);
         var client = new DigestFetch(this.username, this.password);
-//	 	            var url = 'http://192.168.1.68/axis-cgi/io/port.cgi?action=4:/7000%5C';
+//	var url = 'http://192.168.1.68/axis-cgi/io/port.cgi?action=4:/7000%5C';
         var options = {}
         client.fetch(this.url, options)
-	                  .then(resp=>resp.json())
 	                  .then(data=>console.log(data))
 	                  .catch(e=>console.error(e))
 	callback();
