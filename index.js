@@ -1,12 +1,13 @@
 var Service, Characteristic;
 var request = require('sync-request');
+var DigestFetch = require("digest-fetch");
 
 var url 
 
 module.exports = function (homebridge) {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-http-simple-switch", "SimpleHttpSwitch", SimpleHttpSwitch);
+    homebridge.registerAccessory("homebridge-axis-lock-switch", "SimpleHttpSwitch", SimpleHttpSwitch);
 }
 
 
@@ -19,41 +20,39 @@ function SimpleHttpSwitch(log, config) {
     this.sendimmediately = config["sendimmediately"];
     this.default_state_off = config["default_state_off"];
     this.name = config["name"];
+    this.username = config["username"];
+    this.password = config["password"];
 }
 
 SimpleHttpSwitch.prototype = {
 
+/*	
     httpRequest: function (url, body, method, username, password, sendimmediately, callback) {
-        request({
-                    url: url,
-                    body: body,
-                    method: method,
-                    rejectUnauthorized: false
-                },
-                function (error, response, body) {
-                    callback(error, response, body)
-                })
-    },
 
+        var client = new DigestFetch(username, password);
+//	 	            var url = 'http://192.168.1.68/axis-cgi/io/port.cgi?action=4:/7000%5C';
+        var options = {}
+        client.fetch(url, options)
+	                  .then(resp=>resp.json())
+	                  .then(data=>console.log(data))
+	                  .catch(e=>console.error(e))
+
+
+    },
+*/
     getPowerState: function (callback) {
         callback(null, !this.default_state_off);
     },
 
     setPowerState: function(powerOn, callback) {
-        var body;
-
-		var res = request(this.http_method, this.url, {});
-		if(res.statusCode > 400){
-			this.log('HTTP power function failed');
-			callback(error);
-		}else{
-			this.log('HTTP power function succeeded!');
-            var info = JSON.parse(res.body);
-            this.log(res.body);
-            this.log(info);
-			callback();
-		}
-
+        var client = new DigestFetch(this.username, this.password);
+//	 	            var url = 'http://192.168.1.68/axis-cgi/io/port.cgi?action=4:/7000%5C';
+        var options = {}
+        client.fetch(this.url, options)
+	                  .then(resp=>resp.json())
+	                  .then(data=>console.log(data))
+	                  .catch(e=>console.error(e))
+	callback();
     },
 
     identify: function (callback) {
@@ -65,9 +64,9 @@ SimpleHttpSwitch.prototype = {
         var informationService = new Service.AccessoryInformation();
 
         informationService
-                .setCharacteristic(Characteristic.Manufacturer, "Luca Manufacturer")
-                .setCharacteristic(Characteristic.Model, "Luca Model")
-                .setCharacteristic(Characteristic.SerialNumber, "Luca Serial Number");
+                .setCharacteristic(Characteristic.Manufacturer, "Axis")
+                .setCharacteristic(Characteristic.Model, "Video doorbell ")
+                .setCharacteristic(Characteristic.SerialNumber, "1234");
 
         switchService = new Service.Switch(this.name);
         switchService

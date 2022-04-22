@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-http-simple-switch",
+  "name": "homebridge-axis-lock-switch",
   "version": "0.0.2",
   "description": "http plugin for homebridge",
   "license": "ISC",
@@ -11,13 +11,14 @@
     "homebridge": ">=0.2.0"
   },
   "author": {
-    "name": "Luca Critelli"
+    "name": "Andras Toth"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/lucacri/homebridge-http-simple-switch.git"
+    "url": "git://github.com/tothand/homebridge-axis-lock-switch.git"
   },
   "dependencies": {
-    "sync-request": "2.2.0"
+    "sync-request": "2.2.0",
+    "digest-fetch": "^1.2.1"
   }
 }
